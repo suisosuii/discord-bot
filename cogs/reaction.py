@@ -1,6 +1,5 @@
 import discord
-from discord import commands
-from discord.ext import commands as extcommands
+from discord.ext import commands
 import asyncio
 
 
@@ -9,15 +8,15 @@ intents = discord.Intents.default()  # 必要なインテントを含める
 # app_commands.client = client  # コマンドを同期するためにクライアントを設定
 
 # commands.Cogを継承する
-class rec_cog(extcommands.Cog):
+class rec_cog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @extcommands.Cog.listener()
+    @commands.Cog.listener()
     async def on_ready(self):
         print("Cog ready!")
 
-    @commands.application_command(name="test", description="msid: massageID  stmp: つけたいリアクション ")
+    @commands.slash_command(name="test", description="msid: massageID  stmp: つけたいリアクション ")
     async def test(self, interaction: discord.Interaction, msid: str, stmp: str):
         # 応答を遅延させる
         await interaction.response.defer()
@@ -32,7 +31,7 @@ class rec_cog(extcommands.Cog):
         await asyncio.sleep(2)
         await followup_message.delete()
 
-    @commands.application_command(name="reaction", description="before: 何個前のメッセージか  stmp: つけたいリアクション ")
+    @commands.slash_command(name="reaction", description="before: 何個前のメッセージか  stmp: つけたいリアクション ")
     async def reaction(self, interaction: discord.Interaction, before: int, stmp: str):
         # 応答を遅延させる
         await interaction.response.defer()
@@ -53,7 +52,7 @@ class rec_cog(extcommands.Cog):
         await asyncio.sleep(2)
         await followup_message.delete()
 
-    @commands.application_command(name="cancel", description="before: 何個前のメッセージのリアクションを取り消すか")
+    @commands.slash_command(name="cancel", description="before: 何個前のメッセージのリアクションを取り消すか")
     async def cancel(self, interaction: discord.Interaction, before: int):
         # 応答を遅延させる
         await interaction.response.defer()
