@@ -37,5 +37,5 @@ bot = MyBot()
 
 bot.add_cog(rec_cog(bot))
 bot.add_cog(men_cog(bot))
-bot.run(os.environ["TOKEN"] or "")
+bot.run(os.environ["TOKEN"] or "",host='0.0.0.0')
 
