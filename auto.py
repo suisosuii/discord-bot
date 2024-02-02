@@ -15,7 +15,7 @@ async def schedule_access(url, interval):
             await asyncio.sleep(interval)
 
 url = "https://dis-bot-tnme.onrender.com/"  # アクセスしたいウェブサイトのURL
-interval = 300  # 5分を秒単位で表したもの
+interval = 600  #10分 
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(schedule_access(url, interval))
