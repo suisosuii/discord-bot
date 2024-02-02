@@ -39,5 +39,6 @@ bot = MyBot()
 bot.add_cog(rec_cog(bot))
 bot.add_cog(men_cog(bot))
 keep_alive()
+bot.loop.create_task(auto())
 bot.run(os.environ["TOKEN"] or "")
 
