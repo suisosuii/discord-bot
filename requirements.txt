@@ -5,3 +5,9 @@ typing-extensions==4.9.0
 anyio==3.7.1
 async-timeout==4.0.3
 aiohttp==3.8.6
+openmeteo_requests==1.1.0
+openmeteo_sdk==1.8.0
+pandas==2.2.0
+requests==2.31.0
+requests-cache==1.1.1
+retry-requests==2.0.0
