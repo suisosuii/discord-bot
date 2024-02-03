@@ -83,7 +83,7 @@ class weat_cog(commands.Cog):
         print("Cog ready!")
     
     @discord.slash_command(name="weather")
-    @option("day", description="何日後の天気情報か。今日なら0。デフォルト1")
+    @option("day", description="何日後の天気情報か。今日なら0。デフォルト1,６日後まで取得可能です")
     async def weather(self, ctx,day: int=1):
         if day == 0:
             await ctx.send("今日の鯖江市本町の天気は..." + weather_code.get(access_website(day), access_website(day)) + "デス")
