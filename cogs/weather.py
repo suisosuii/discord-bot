@@ -83,7 +83,7 @@ class weat_cog(commands.Cog):
     
     @discord.slash_command(name="weather")
     async def weather(self, ctx):
-        await ctx.send("今日の鯖江市本町の天気は..." + weather_code.get(access_website(0), access_website(0)) + "　デス")
+        await ctx.send("今日の鯖江市本町の天気は..." + weather_code.get(access_website(0), access_website(0)) + "デス")
 def setup(bot):
     bot.add_cog(weat_cog(bot))
 
