@@ -19,7 +19,7 @@ async def schedule_access(url, interval):
                 print(f"Accessed {url}.")
             await asyncio.sleep(interval)
 
-url = "https://dis-bot-3re1.onrender.com"  # アクセスしたいウェブサイトのURL
+url = "https://dis-bot-wyqa.onrender.com"  # アクセスしたいウェブサイトのURL
 interval = 600  #10分 
 
 async def auto():
