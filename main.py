@@ -7,6 +7,7 @@ from auto import auto
 
 from cogs.reaction import rec_cog
 from cogs.mention import men_cog
+from cogs.weather import weat_cog
 
 class MyBot(commands.Bot):
     def __init__(self):
@@ -31,6 +32,7 @@ bot = MyBot()
 
 bot.add_cog(rec_cog(bot))
 bot.add_cog(men_cog(bot))
+bot.add_cog(weat_cog(bot))
 keep_alive()
 bot.loop.create_task(auto())  # auto関数をバックグラウンドタスクとして追加
 bot.run(os.environ["TOKEN"] or "")
