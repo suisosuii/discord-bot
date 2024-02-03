@@ -6,6 +6,7 @@ from retry_requests import retry
 import discord
 from discord.ext import commands
 import asyncio
+from discord import option
 
 #いろいろ初期値設定
 
@@ -82,8 +83,9 @@ class weat_cog(commands.Cog):
         print("Cog ready!")
     
     @discord.slash_command(name="weather")
-    async def weather(self, ctx):
-        await ctx.send("今日の鯖江市本町の天気は..." + weather_code.get(access_website(0), access_website(0)) + "デス")
+    @option("day", description="何日後の天気情報か。今日なら0。デフォルト1")
+    async def weather(self, ctx,day: int=1):
+        await ctx.send("今日の鯖江市本町の天気は..." + weather_code.get(access_website(day), access_website(day)) + "デス")
 def setup(bot):
     bot.add_cog(weat_cog(bot))
 
