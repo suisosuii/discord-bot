@@ -54,9 +54,9 @@ params = {
 	"longitude": 136.1842,
 	"daily": "weather_code"
 }
-responses = openmeteo.weather_api(url, params=params)
 
 def access_website(day):
+    responses = openmeteo.weather_api(url, params=params)
     # Process first location. Add a for-loop for multiple locations or weather models
     response = responses[0]
 
