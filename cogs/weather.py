@@ -5,8 +5,8 @@ import pandas as pd
 from retry_requests import retry
 import discord
 from discord.ext import commands
-import asyncio
 from discord import option
+import datetime
 
 #いろいろ初期値設定
 
@@ -45,7 +45,36 @@ weather_code = {
     96: "雷雨：弱で雹を伴う",
     99: "雷雨：強で雹を伴う"
 }
-
+weather_icon ={
+    0: "🌞：晴れ",
+    1: "🌞：主に晴れ",
+    2: "🌤：ときどき曇り",
+    3: "☁：曇り",
+    45: "🌫：霧および着氷霧",
+    48: "🌫および着氷霧",
+    51: "🌧：霧雨(弱)",
+    53: "🌧：霧雨(中)",
+    55: "🌧：霧雨(強)",
+    56: "🌧：凍結霧雨(弱)",
+    57: "🌧：凍結霧雨(強)",
+    61: "🌂：雨(弱)",
+    63: "☔：雨(中)",
+    65: "☔：雨(強)",
+    66: "🌂：凍結雨(弱)",
+    67: "☔：凍結雨(強)",
+    71: "⛄：雪(弱)",
+    73: "⛄：雪(中)",
+    75: "⛄：雪(強)",
+    77: "⛄：雪(粒)",
+    80: "🌂：にわか雨(弱)",
+    81: "☔：にわか雨(中)",
+    82: "☔：にわか雨(激しい)",
+    85: "⛄：にわか雪(弱)",
+    86: "⛄：にわか雪(強)",
+    95: "⛈：雷雨(弱または中)",
+    96: "⛈：雷雨(弱で雹を伴う)",
+    99: "⛈：雷雨(強で雹を伴う)"
+}
 # Make sure all required weather variables are listed here
 # The order of variables in hourly or daily is important to assign them correctly below
 url = "https://api.open-meteo.com/v1/forecast"
@@ -85,10 +114,26 @@ class weat_cog(commands.Cog):
     @discord.slash_command(name="weather")
     @option("day", description="何日後の天気情報か。今日なら0。デフォルト1,６日後まで取得可能です")
     async def weather(self, ctx,day: int=1):
-        if day == 0:
-            await ctx.send("今日の鯖江市本町の天気は..." + weather_code.get(access_website(day), access_website(day)) + "デス")
-        else:
-            await ctx.send(str(day) + "日後の鯖江市本町の天気は..." + weather_code.get(access_website(day), access_website(day)) + "デス")
+        dt = datetime.datetime.today()
+        dtFix = dt + datetime.timedelta(days=day)
+        embed = discord.Embed(
+        title=str(dtFix.month) + "月"+ str(dtFix.day) + "日の気象情報",
+        description="場所：鯖江市本町",
+        color=discord.Colour.blurple(), # Pycord provides a class with default colors you can choose from
+        )
+        embed.add_field(name="天気", value=weather_icon[access_website(day)], inline=False)
+        embed.add_field(name="最高気温", value="℃", inline=True)
+        #空フィールドで位置調整
+        embed.add_field(name="\u200b", value="\u200b", inline=True)
+        embed.add_field(name="最低気温", value="℃", inline=True)
+
+        embed.set_author(name="reaction bot", icon_url="https://github.com/suisosuii/discord-bot/blob/Embed/cogs/png/deth.png?raw=true")
+        embed.set_thumbnail(url="https://github.com/suisosuii/discord-bot/blob/Embed/cogs/png/deth.png?raw=true")
+        await ctx.respond(embed=embed) # Send the embed with some text
+        # if day == 0:
+        #     await ctx.send("今日の鯖江市本町の天気は..." + weather_code.get(access_website(day), access_website(day)) + "デス")
+        # else:
+        #     await ctx.send(str(day) + "日後の鯖江市本町の天気は..." + weather_code.get(access_website(day), access_website(day)) + "デス")
 def setup(bot):
     bot.add_cog(weat_cog(bot))
 
