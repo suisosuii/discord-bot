@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord import option
 import asyncio
 
 class men_cog(commands.Cog):
@@ -10,23 +11,13 @@ class men_cog(commands.Cog):
     async def on_ready(self):
         print("Cog ready!")
     
-    @discord.slash_command(name="hundred")
+    @discord.slash_command(name="hundred", description="指定の人、指定した回数メンションできるよ。たたき起こせ")
     async def hundred(self, ctx, subject: discord.Member=None, times: int=1):
         user = ctx.author
         nickname = user.nick if user.nick else user.name
         messages_to_delete = []
         if(nickname == "緊急地震速報"):
-            await ctx.send("おわったああああ")
-            return
-        elif(nickname == "八方ブス"):
-            await ctx.send("ゲーセン連れてって")
-            return
-        elif(nickname == "PAYDAYぶどう"):
-            await ctx.send("詐欺に気を付けようね")
-            return
-        elif(nickname == "SMILE-UP."):
-            await ctx.send("ずんだもん = SMILE-UP.")
-            return
+            await ctx.respond("権限が足りないですよ")
         else:
             if times > 0:
                 for num in range(times):
@@ -35,7 +26,7 @@ class men_cog(commands.Cog):
 
         for message in messages_to_delete:
             await message.delete()
-        await ctx.send(nickname + "に命令されました", delete_after=10)
+        await ctx.respond(nickname + "に命令されました", delete_after=10)
     
 def setup(bot):
     bot.add_cog(men_cog(bot))
