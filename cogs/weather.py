@@ -123,9 +123,12 @@ class weat_cog(commands.Cog):
         )
         embed.add_field(name="天気", value=weather_icon[access_website(day)], inline=False)
         embed.add_field(name="最高気温", value="℃", inline=True)
+        #空フィールドで位置調整
+        embed.add_field(name="\u200b", value="\u200b", inline=True)
         embed.add_field(name="最低気温", value="℃", inline=True)
 
-        embed.set_author(name="reaction bot", icon_url="")
+        embed.set_author(name="reaction bot", icon_url="https://github.com/suisosuii/discord-bot/blob/Embed/cogs/png/deth.png?raw=true")
+        embed.set_thumbnail(url="https://github.com/suisosuii/discord-bot/blob/Embed/cogs/png/deth.png?raw=true")
         await ctx.respond(embed=embed) # Send the embed with some text
         # if day == 0:
         #     await ctx.send("今日の鯖江市本町の天気は..." + weather_code.get(access_website(day), access_website(day)) + "デス")
