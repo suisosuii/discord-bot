@@ -33,7 +33,7 @@ class rec_cog(commands.Cog):
         await followup_message.delete()
 
     @commands.slash_command(name="reaction", description="アルファベットを指定すればその通りにリアクションをつけるよ")
-    @option("message", description="リアクションをつけたいメッセージを右クリックしてメッセージリンクを張ってね")
+    @option("message", description="リアクションをつけたいメッセージを右クリックしてメッセージリンクをコピーして張ってね")
     @option("stmp", description="つけたいリアクションをアルファベットで")
     async def reaction(self, interaction: discord.Interaction, message: commands.MessageConverter, stmp: str):
         # 応答を遅延させる
@@ -54,13 +54,13 @@ class rec_cog(commands.Cog):
         await asyncio.sleep(2)
         await followup_message.delete()
 
-    @commands.slash_command(name="cancel", description="before: 何個前のメッセージのリアクションを取り消すか")
-    async def cancel(self, interaction: discord.Interaction, before: int):
+    @commands.slash_command(name="cancel", description="このbotがつけたリアクションを取り消せるよ")
+    @option("message", description="リアクションを消したいメッセージを右クリックしてメッセージリンクをコピーして張ってね")
+    async def cancel(self, interaction: discord.Interaction, message: commands.MessageConverter):
         # 応答を遅延させる
         await interaction.response.defer()
-        messages = [message async for message in interaction.channel.history(limit=before + 1)]
-        print(messages[before].id)  # メッセージIDを出力
-        msg = await interaction.channel.fetch_message(messages[before].id)
+        print(message.id)  # メッセージIDを出力
+        msg = await interaction.channel.fetch_message(message.id)
         for reaction in msg.reactions:
             await msg.remove_reaction(reaction.emoji, self.bot.user)
         # エフェメラルメッセージを送信する
