@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import asyncio
+from discord import option
 
 
 intents = discord.Intents.default()  # 必要なインテントを含める
@@ -16,7 +17,7 @@ class rec_cog(commands.Cog):
     async def on_ready(self):
         print("Cog ready!")
 
-    @commands.slash_command(name="test", description="msid: massageID  stmp: つけたいリアクション ")
+    @commands.slash_command(name="test", description="テストコマンドなので実行しないでね")
     async def test(self, interaction: discord.Interaction, msid: str, stmp: str):
         # 応答を遅延させる
         await interaction.response.defer()
@@ -31,13 +32,14 @@ class rec_cog(commands.Cog):
         await asyncio.sleep(2)
         await followup_message.delete()
 
-    @commands.slash_command(name="reaction", description="before: 何個前のメッセージか  stmp: つけたいリアクション ")
-    async def reaction(self, interaction: discord.Interaction, before: int, stmp: str):
+    @commands.slash_command(name="reaction", description="アルファベットを指定すればその通りにリアクションをつけるよ")
+    @option("message", description="リアクションをつけたいメッセージを右クリックしてメッセージリンクを張ってね")
+    @option("stmp", description="つけたいリアクションをアルファベットで")
+    async def reaction(self, interaction: discord.Interaction, message: commands.MessageConverter, stmp: str):
         # 応答を遅延させる
         await interaction.response.defer()
-        messages = [message async for message in interaction.channel.history(limit=before + 1)]
-        print(messages[before].id)  # メッセージIDを出力
-        msg = await interaction.channel.fetch_message(messages[before].id)
+        print(message.id)  # メッセージIDを出力
+        msg = await interaction.channel.fetch_message(message.id)
         for char in stmp:
             if char.isalpha():
                 await msg.add_reaction(chr(0x1F1E6 + ord(char.upper()) - ord('A')))
