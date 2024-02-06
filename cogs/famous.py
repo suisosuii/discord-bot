@@ -5,9 +5,13 @@ import asyncio
 
 # ファイルを書き込みモードで開く（'a'）
 def write(meigen, person):
-    with open("./cogs/meigen/" + person +".txt", 'w') as f:
+    with open("./cogs/meigen/" + person +".txt", 'a') as f:
         f.write(str(line_count("./cogs/meigen/" + person +".txt")) +":"+meigen + "\n")
 
+# ファイルを書き込みモードで開く（'a'）
+def create(person):
+    with open("./cogs/meigen/" + person +".txt", 'w') as f:
+        f.write("")
 
 # ファイルを読み込みモードで開く（'r'）して内容を表示
 def read(person):
@@ -45,6 +49,11 @@ class fom_cog(commands.Cog):
     @discord.slash_command(name="famous_file", description="名言をテキストファイルとして出力するよ")
     async def famous_file(self, ctx, member: discord.Member):
         await ctx.respond(file=discord.file("./cogs/meigen/" + member.name +".txt"))
+
+    @discord.slash_command(name="crt_file", description="管理者用ファイル生成コマンド。使わないでね。")
+    async def crt_file(self, ctx):
+        for member in ctx.guild.members:
+            create(member.name)
     
 def setup(bot):
     bot.add_cog(fom_cog(bot))
