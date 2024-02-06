@@ -13,6 +13,17 @@ def create(person):
     with open("./cogs/meigen/" + person +".txt", 'w') as f:
         f.write("")
 
+def read_line(person,line):
+    try:
+        with open("./cogs/meigen/" + person +".txt", 'r') as f:
+            lines = f.readlines()
+            if line <= len(lines):
+                return lines[line - 1].strip()  # リストは0から始まるため、1を引く
+            else:
+                return "エラー：指定された行は存在しません。"
+    except PermissionError:
+        return "エラー：ファイルの読み込み権限がありません。"
+
 # ファイルを読み込みモードで開く（'r'）して内容を表示
 def read(person):
     try:
@@ -35,16 +46,19 @@ class fom_cog(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("Cog ready!")
-    
+
     @discord.slash_command(name="famous_w", description="名言をファイルに書き込むよ")
     async def famous_w(self, ctx, member: discord.Member, meigen: str):
         write(meigen,member.name)
         await ctx.respond("保存しました。\n"+ member.name + " : " + meigen)
 
-    
     @discord.slash_command(name="famous_r", description="名言を読み込むよ")
     async def famous_r(self, ctx, member: discord.Member):
         await ctx.respond(member.name+"の名言集\n"+read(member.name))
+
+    @discord.slash_command(name="famous_line", description="名言を読み込むよ")
+    async def famous_line(self, ctx, member: discord.Member, line=int):
+        await ctx.respond(member.name+"の名言\n"+read(member.name))
 
     @discord.slash_command(name="famous_file", description="名言をテキストファイルとして出力するよ")
     async def famous_file(self, ctx, member: discord.Member):
@@ -54,6 +68,6 @@ class fom_cog(commands.Cog):
     async def crt_file(self, ctx):
         for member in ctx.guild.members:
             create(member.name)
-    
+
 def setup(bot):
     bot.add_cog(fom_cog(bot))
