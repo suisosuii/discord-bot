@@ -57,7 +57,7 @@ class fom_cog(commands.Cog):
         await ctx.respond(member.name+"の名言集\n"+read(member.name))
 
     @discord.slash_command(name="famous_line", description="名言を読み込むよ")
-    async def famous_line(self, ctx, member: discord.Member, line=int):
+    async def famous_line(self, ctx, member: discord.Member, line:int):
         await ctx.respond(member.name+"の名言\n"+read_line(member.name,line))
 
     @discord.slash_command(name="famous_file", description="名言をテキストファイルとして出力するよ")
