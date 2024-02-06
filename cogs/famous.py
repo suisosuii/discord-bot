@@ -43,7 +43,7 @@ class fom_cog(commands.Cog):
         await ctx.respond(member.name+"の名言集\n"+read(member.name))
 
     @discord.slash_command(name="famous_file", description="名言をテキストファイルとして出力するよ")
-    async def famous_r(self, ctx, member: discord.Member):
+    async def famous_file(self, ctx, member: discord.Member):
         await ctx.respond(file=discord.file("./cogs/meigen/" + member.name +".txt"))
     
 def setup(bot):
