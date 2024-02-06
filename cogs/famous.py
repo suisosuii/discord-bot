@@ -11,8 +11,11 @@ def write(meigen, person):
 
 # ファイルを読み込みモードで開く（'r'）して内容を表示
 def read(person):
-    with open("./cogs/meigen/" + person +".txt", 'r') as f:
-        return f.read()
+    try:
+        with open("./cogs/meigen/" + person +".txt", 'r') as f:
+            return f.read()
+    except PermissionError:
+        return "エラー：ファイルの読み込み権限がありません。"
 
 def line_count(path):
     try:
