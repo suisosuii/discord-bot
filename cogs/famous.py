@@ -20,7 +20,7 @@ def read(person):
 def line_count(path):
     try:
         with open(path, 'r') as f:
-            return sum(1 for line in f)
+            return sum(1 for line in f) + 1
     except FileNotFoundError:
         return 1
 
@@ -41,6 +41,10 @@ class fom_cog(commands.Cog):
     @discord.slash_command(name="famous_r", description="名言を読み込むよ")
     async def famous_r(self, ctx, member: discord.Member):
         await ctx.respond(member.name+"の名言集\n"+read(member.name))
+
+    @discord.slash_command(name="famous_file", description="名言をテキストファイルとして出力するよ")
+    async def famous_r(self, ctx, member: discord.Member):
+        await ctx.respond(file=discord.file("./cogs/meigen/" + member.name +".txt"))
     
 def setup(bot):
     bot.add_cog(fom_cog(bot))
