@@ -13,7 +13,7 @@ def create(person):
     with open("./cogs/meigen/" + person +".txt", 'w') as f:
         f.write("")
 
-def read_line(person,line):
+def read_line(person,line:int):
     try:
         with open("./cogs/meigen/" + person +".txt", 'r') as f:
             lines = f.readlines()
