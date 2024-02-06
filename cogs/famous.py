@@ -5,7 +5,7 @@ import asyncio
 
 # ファイルを書き込みモードで開く（'a'）
 def write(meigen, person):
-    with open("./cogs/meigen/" + person +".txt", 'a') as f:
+    with open("./cogs/meigen/" + person +".txt", 'w') as f:
         f.write(str(line_count("./cogs/meigen/" + person +".txt")) +":"+meigen + "\n")
 
 
