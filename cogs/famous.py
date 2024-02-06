@@ -58,11 +58,11 @@ class fom_cog(commands.Cog):
 
     @discord.slash_command(name="famous_line", description="名言を読み込むよ")
     async def famous_line(self, ctx, member: discord.Member, line=int):
-        await ctx.respond(member.name+"の名言\n"+read(member.name))
+        await ctx.respond(member.name+"の名言\n"+read_line(member.name,line))
 
     @discord.slash_command(name="famous_file", description="名言をテキストファイルとして出力するよ")
     async def famous_file(self, ctx, member: discord.Member):
-        await ctx.respond(file=discord.file("./cogs/meigen/" + member.name +".txt"))
+        await ctx.respond(file=discord.File("./cogs/meigen/" + member.name +".txt"))
 
     @discord.slash_command(name="crt_file", description="管理者用ファイル生成コマンド。使わないでね。")
     async def crt_file(self, ctx):
