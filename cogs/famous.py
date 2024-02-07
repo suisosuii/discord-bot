@@ -39,6 +39,17 @@ def line_count(path):
     except FileNotFoundError:
         return 1
 
+def write_line(edited, person, line):
+    with open("./cogs/meigen/" + person +".txt", 'r') as f:
+        lines = f.readlines()
+    if line <= len(lines):
+        lines[line] = str(line) + ":" + edited + "\n"
+        with open("./cogs/meigen/" + person +".txt", 'w') as f:
+            f.writelines(lines)
+    else:
+        return "エラー：指定された行は存在しません。"
+
+
 class fom_cog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -68,6 +79,12 @@ class fom_cog(commands.Cog):
     async def crt_file(self, ctx):
         for member in ctx.guild.members:
             create(member.name)
+
+    @discord.slash_command(name="famous_edit", description="特定の番号の行の名言を書き換えるよ")
+    async def famous_edit(self, ctx, member: discord.Member, edited: str, line: int):
+        write_line(edited,member.name,line)
+        await ctx.respond("編集しました。\n"+ line + " : " + edited)
+
 
 def setup(bot):
     bot.add_cog(fom_cog(bot))
